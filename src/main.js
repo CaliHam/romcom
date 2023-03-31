@@ -9,9 +9,9 @@ var showNewRandomCoverButton = document.querySelector('.random-cover-button');
 var saveCoverButton = document.querySelector('.save-cover-button');
 var viewSavedCoversButton = document.querySelector('.view-saved-button');
 var createBookBtn = document.querySelector('.create-new-book-button');
+var makeNewButton = document.querySelector('.make-new-button');
 var homeView = document.querySelector('.home-view');
 var savedView = document.querySelector('.saved-view');
-var makeNewButton = document.querySelector('.make-new-button');
 var homeView = document.querySelector('.home-view');
 var formView = document.querySelector('.form-view');
 var userCover = document.querySelector('.user-cover');
@@ -19,7 +19,6 @@ var userTitle = document.querySelector('.user-title');
 var userDecr1 = document.querySelector('.user-desc1');
 var userDecr2 = document.querySelector('.user-desc2');
 
-// We've provided a few variables below
 var savedCovers = [
   createCover("http://3.bp.blogspot.com/-iE4p9grvfpQ/VSfZT0vH2UI/AAAAAAAANq8/wwQZssi-V5g/s1600/Do%2BNot%2BForsake%2BMe%2B-%2BImage.jpg", "Sunsets and Sorrows", "sunsets", "sorrows")
 ];
@@ -27,14 +26,15 @@ var currentCover;
 var currentView;
 
 // Add your event listeners here 👇
+saveCoverButton.addEventListener('click', saveCover);
+makeNewButton.addEventListener('click', makeCoverButton);
+homeButton.addEventListener('click', goHome);
+
 showNewRandomCoverButton.addEventListener('click', getRandomCover);
 viewSavedCoversButton.addEventListener('click', function () {
   currentView = homeView;
   switchToViewSavedCovers(currentView);
 });
-
-makeNewButton.addEventListener('click', makeCoverButton);
-homeButton.addEventListener('click', goHome)
 
 window.onload = (event) => {
   currentCover = createCover(
@@ -68,18 +68,18 @@ function getRandomDesc() {
 }
 
 function getRandomCover() {
-  var randomCover = createCover(
+  currentCover = createCover(
     getRandomImage(), 
     getRandomTitle(), 
     getRandomDesc(), 
     getRandomDesc()
     );
-  fullCover.innerHTML = `<img class="cover-image" src="${randomCover.coverImg}">
-    <h2 class="cover-title">${randomCover.title}</h2>
-    <h3 class="tagline">A tale of <span class="tagline-1">${randomCover.tagline1}</span> and <span class="tagline-2">${randomCover.tagline2}</span></h3>
+  fullCover.innerHTML = `<img class="cover-image" src="${currentCover.coverImg}">
+    <h2 class="cover-title">${currentCover.title}</h2>
+    <h3 class="tagline">A tale of <span class="tagline-1">${currentCover.tagline1}</span> and <span class="tagline-2">${currentCover.tagline2}</span></h3>
     <img class="price-tag" src="./assets/price.png">
     <img class="overlay" src="./assets/overlay.png">`
-  return randomCover;
+  return currentCover;
 }
 function goHome() {
   homeButton.classList.add('hidden');
@@ -110,7 +110,12 @@ function switchToViewSavedCovers(currentView) {
   savedView.classList.remove("hidden");
 }
 
-// MAKE MY BOOK BUTTON //
+function saveCover() {
+  if (!savedCovers.includes(currentCover)) {
+    savedCovers.push(currentCover);
+  }
+}
+
 createBookBtn.addEventListener("click", function(event){
   event.preventDefault();
   makeBookButton();
