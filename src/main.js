@@ -35,6 +35,10 @@ viewSavedCoversButton.addEventListener('click', function () {
   currentView = homeView;
   switchToViewSavedCovers(currentView);
 });
+createBookBtn.addEventListener("click", function(event){
+  event.preventDefault();
+  makeBookButton();
+});
 
 window.onload = (event) => {
   currentCover = createCover(
@@ -115,11 +119,6 @@ function saveCover() {
     savedCovers.push(currentCover);
   }
 }
-
-createBookBtn.addEventListener("click", function(event){
-  event.preventDefault();
-  makeBookButton();
-});
 
 function makeBookButton() {
   currentCover = createCover(userCover.value, userTitle.value, userDecr1.value, userDecr2.value);
